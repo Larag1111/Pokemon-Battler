@@ -73,8 +73,8 @@ public class Main {
     public static void showAllPokemon(List<Pokemon> pokedex) {
         for (int i = 0; i < pokedex.size(); i++) {
             Pokemon pokemon = pokedex.get(i);
-            System.out.println((i + 1) + ". " + pokemon.name + " - " + pokemon.type
-                    + " - HP " + pokemon.currentHp + "/" + pokemon.maxHp);
+            System.out.println((i + 1) + ". " + pokemon.getName() + " - " + pokemon.getType()
+                    + " - HP " + pokemon.getCurrentHp() + "/" + pokemon.getMaxHp());
         }
     }
 
@@ -101,10 +101,13 @@ public class Main {
         int number = readIntInRange(scanner, "Choose Pokemon to edit: ", 1, pokedex.size());
         Pokemon pokemon = pokedex.get(number - 1);
 
-        pokemon.name = readName(scanner, "New name: ");
-        pokemon.maxHp = readIntInRange(scanner, "New max HP: ", 1, Integer.MAX_VALUE);
-        pokemon.currentHp = pokemon.maxHp;
-        pokemon.type = readType(scanner, "New type");
+        pokemon.setName(readName(scanner, "New name: "));
+
+        int newMaxHp = readIntInRange(scanner, "New max HP: ", 1, Integer.MAX_VALUE);
+        pokemon.setMaxHp(newMaxHp);
+        pokemon.setCurrentHp(newMaxHp);
+
+        pokemon.setType(readType(scanner, "New type"));
 
         boolean editingAttacks = true;
         while (editingAttacks) {
@@ -115,10 +118,10 @@ public class Main {
 
             switch (choice) {
                 case 1 -> {
-                    if (pokemon.attacks.size() >= 4) {
+                    if (pokemon.getAttacks().size() >= 4) {
                         System.out.println("Pokemon already has 4 attacks.");
                     } else {
-                        pokemon.attacks.add(readAttack(scanner));
+                        pokemon.getAttacks().add(readAttack(scanner));
                         System.out.println("Attack added.");
                     }
                 }
@@ -131,17 +134,17 @@ public class Main {
     }
 
     public static void removeAttack(Scanner scanner, Pokemon pokemon) {
-        if (pokemon.attacks.size() <= 1) {
+        if (pokemon.getAttacks().size() <= 1) {
             System.out.println("Pokemon must have at least 1 attack.");
             return;
         }
 
-        for (int i = 0; i < pokemon.attacks.size(); i++) {
-            System.out.println((i + 1) + ". " + pokemon.attacks.get(i).name);
+        for (int i = 0; i < pokemon.getAttacks().size(); i++) {
+            System.out.println((i + 1) + ". " + pokemon.getAttacks().get(i).name);
         }
 
-        int number = readIntInRange(scanner, "Choose attack to remove: ", 1, pokemon.attacks.size());
-        pokemon.attacks.remove(number - 1);
+        int number = readIntInRange(scanner, "Choose attack to remove: ", 1, pokemon.getAttacks().size());
+        pokemon.getAttacks().remove(number - 1);
         System.out.println("Attack removed.");
     }
 
@@ -154,7 +157,7 @@ public class Main {
         showAllPokemon(pokedex);
         int number = readIntInRange(scanner, "Choose Pokemon to delete: ", 1, pokedex.size());
         Pokemon deleted = pokedex.remove(number - 1);
-        System.out.println(deleted.name + " deleted.");
+        System.out.println(deleted.getName() + " deleted.");
     }
 
     public static Attack readAttack(Scanner scanner) {
@@ -212,12 +215,12 @@ public class Main {
         StringBuilder data = new StringBuilder();
 
         for (Pokemon pokemon : pokedex) {
-            data.append(pokemon.name).append("|")
-                    .append(pokemon.type).append("|")
-                    .append(pokemon.maxHp).append("|")
-                    .append(pokemon.currentHp);
+            data.append(pokemon.getName()).append("|")
+                    .append(pokemon.getType()).append("|")
+                    .append(pokemon.getMaxHp()).append("|")
+                    .append(pokemon.getCurrentHp());
 
-            for (Attack attack : pokemon.attacks) {
+            for (Attack attack : pokemon.getAttacks()) {
                 data.append("|").append(attack.name).append(",")
                         .append(attack.baseDamage).append(",")
                         .append(attack.accuracy).append(",")
