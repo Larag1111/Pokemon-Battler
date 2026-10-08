@@ -57,10 +57,11 @@ public class Main {
                         int number = readIntInRange(scanner, "Choose your Pokemon: ", 1, pokedex.size());
                         Pokemon player = pokedex.get(number - 1);
 
-                        Pokemon opponent = pokedex.get(0);
-                        if (opponent == player) {
-                            opponent = pokedex.get(1);
-                        }
+                        Pokemon opponent;
+                        do {
+                            int randomIndex = (int) (Math.random() * pokedex.size());
+                            opponent = pokedex.get(randomIndex);
+                        } while (opponent == player);
 
                         Battle.start(player, opponent);
                     } else {
