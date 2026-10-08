@@ -55,12 +55,7 @@ public class Battle {
             int chance = (int) (Math.random() * 100) + 1;
 
             if (chance <= chosenAttack.accuracy) {
-                int damage = chosenAttack.baseDamage;
-
-                if (chosenAttack.type == Type.GRASS && opponent.getType() == Type.WATER) {
-                    damage = damage * 2;
-                }
-
+                int damage = calculateDamage(chosenAttack, opponent);
                 opponent.takeDamage(damage);
             } else {
                 System.out.println(player.getName() + "'s attack missed!");
@@ -82,7 +77,8 @@ public class Battle {
             int cpuChance = (int) (Math.random() * 100) + 1;
 
             if (cpuChance <= cpuAttack.accuracy) {
-                player.takeDamage(cpuAttack.baseDamage);
+                int damage = calculateDamage(cpuAttack, player);
+                player.takeDamage(damage);
             } else {
                 System.out.println(opponent.getName() + "'s attack missed!");
             }
@@ -101,5 +97,21 @@ public class Battle {
             System.out.println(player.getName() + ": " + player.getCurrentHp());
             System.out.println(opponent.getName() + ": " + opponent.getCurrentHp());
         }
+    }
+
+    private static int calculateDamage(Attack attack, Pokemon defender) {
+        int damage = attack.baseDamage;
+
+        if (attack.type == Type.GRASS && defender.getType() == Type.WATER) {
+            damage = damage * 2;
+        } else if (attack.type == Type.WATER && defender.getType() == Type.FIRE) {
+            damage = damage * 2;
+        } else if (attack.type == Type.FIRE && defender.getType() == Type.GRASS) {
+            damage = damage * 2;
+        } else if (attack.type == Type.ELECTRIC && defender.getType() == Type.WATER) {
+            damage = damage * 2;
+        }
+
+        return damage;
     }
 }
