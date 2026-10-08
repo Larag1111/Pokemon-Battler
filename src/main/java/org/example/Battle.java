@@ -46,6 +46,12 @@ public class Battle {
         System.out.println(player.getName() + " used " + chosenAttack.name + "!");
         System.out.println(opponent.getName() + " HP: "
                 + opponent.getCurrentHp() + "/" + opponent.getMaxHp());
+        if (opponent.isDefeated()) {
+            System.out.println(opponent.getName() + " is defeated!");
+            System.out.println("You win!");
+            return;
+        }
+
         if (!opponent.isDefeated() && !opponent.getAttacks().isEmpty()) {
             int randomIndex = (int) (Math.random() * opponent.getAttacks().size());
             Attack cpuAttack = opponent.getAttacks().get(randomIndex);
@@ -55,6 +61,10 @@ public class Battle {
             System.out.println(opponent.getName() + " used " + cpuAttack.name + "!");
             System.out.println(player.getName() + " HP: "
                     + player.getCurrentHp() + "/" + player.getMaxHp());
+            if (player.isDefeated()) {
+                System.out.println(player.getName() + " is defeated!");
+                System.out.println("You lose!");
+            }
         }
     }
 }
