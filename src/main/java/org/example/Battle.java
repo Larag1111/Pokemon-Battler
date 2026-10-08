@@ -16,45 +16,51 @@ public class Battle {
             return;
         }
 
-        System.out.println("\nChoose an attack:");
-
-        for (int i = 0; i < player.getAttacks().size(); i++) {
-            Attack attack = player.getAttacks().get(i);
-            System.out.println((i + 1) + ". " + attack.name);
-        }
-
-        int choice;
-        while (true) {
-            System.out.print("Choose: ");
-
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-
-                if (choice >= 1 && choice <= player.getAttacks().size()) {
-                    break;
-                }
-            } else {
-                scanner.next();
-            }
-
-            System.out.println("Invalid attack. Try again.");
-        }
-
-        Attack chosenAttack = player.getAttacks().get(choice - 1);
-
-        opponent.takeDamage(chosenAttack.baseDamage);
-
-        System.out.println(player.getName() + " used " + chosenAttack.name + "!");
-        System.out.println(opponent.getName() + " HP: "
-                + opponent.getCurrentHp() + "/" + opponent.getMaxHp());
-
-        if (opponent.isDefeated()) {
-            System.out.println(opponent.getName() + " is defeated!");
-            System.out.println("You win!");
+        if (opponent.getAttacks().isEmpty()) {
+            System.out.println("Opponent has no attacks!");
             return;
         }
 
-        if (!opponent.getAttacks().isEmpty()) {
+        while (!player.isDefeated() && !opponent.isDefeated()) {
+
+            System.out.println("\nChoose an attack:");
+
+            for (int i = 0; i < player.getAttacks().size(); i++) {
+                Attack attack = player.getAttacks().get(i);
+                System.out.println((i + 1) + ". " + attack.name);
+            }
+
+            int choice;
+            while (true) {
+                System.out.print("Choose: ");
+
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+
+                    if (choice >= 1 && choice <= player.getAttacks().size()) {
+                        break;
+                    }
+                } else {
+                    scanner.next();
+                }
+
+                System.out.println("Invalid attack. Try again.");
+            }
+
+            Attack chosenAttack = player.getAttacks().get(choice - 1);
+
+            opponent.takeDamage(chosenAttack.baseDamage);
+
+            System.out.println(player.getName() + " used " + chosenAttack.name + "!");
+            System.out.println(opponent.getName() + " HP: "
+                    + opponent.getCurrentHp() + "/" + opponent.getMaxHp());
+
+            if (opponent.isDefeated()) {
+                System.out.println(opponent.getName() + " is defeated!");
+                System.out.println("You win!");
+                break;
+            }
+
             int randomIndex = (int) (Math.random() * opponent.getAttacks().size());
             Attack cpuAttack = opponent.getAttacks().get(randomIndex);
 
@@ -67,11 +73,13 @@ public class Battle {
             if (player.isDefeated()) {
                 System.out.println(player.getName() + " is defeated!");
                 System.out.println("You lose!");
+                break;
             }
-        }
 
-        System.out.println("\nHP after this round:");
-        System.out.println(player.getName() + ": " + player.getCurrentHp());
-        System.out.println(opponent.getName() + ": " + opponent.getCurrentHp());
+            System.out.println("\nHP after this round:");
+            System.out.println(player.getName() + ": " + player.getCurrentHp());
+            System.out.println(opponent.getName() + ": " + opponent.getCurrentHp());
+        }
     }
 }
+
