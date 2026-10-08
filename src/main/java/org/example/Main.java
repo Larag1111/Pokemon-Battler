@@ -52,7 +52,17 @@ public class Main {
                 }
                 case 9 -> {
                     if (pokedex.size() >= 2) {
-                        Battle.start(pokedex.get(0), pokedex.get(1));
+                        showAllPokemon(pokedex);
+
+                        int number = readIntInRange(scanner, "Choose your Pokemon: ", 1, pokedex.size());
+                        Pokemon player = pokedex.get(number - 1);
+
+                        Pokemon opponent = pokedex.get(0);
+                        if (opponent == player) {
+                            opponent = pokedex.get(1);
+                        }
+
+                        Battle.start(player, opponent);
                     } else {
                         System.out.println("Not enough Pokemon to start a battle.");
                     }
