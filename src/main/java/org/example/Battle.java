@@ -49,7 +49,13 @@ public class Battle {
 
             Attack chosenAttack = player.getAttacks().get(choice - 1);
 
-            opponent.takeDamage(chosenAttack.baseDamage);
+            int chance = (int) (Math.random() * 100) + 1;
+
+            if (chance <= chosenAttack.accuracy) {
+                opponent.takeDamage(chosenAttack.baseDamage);
+            } else {
+                System.out.println(player.getName() + "'s attack missed!");
+            }
 
             System.out.println(player.getName() + " used " + chosenAttack.name + "!");
             System.out.println(opponent.getName() + " HP: "
@@ -64,7 +70,13 @@ public class Battle {
             int randomIndex = (int) (Math.random() * opponent.getAttacks().size());
             Attack cpuAttack = opponent.getAttacks().get(randomIndex);
 
-            player.takeDamage(cpuAttack.baseDamage);
+            int cpuChance = (int) (Math.random() * 100) + 1;
+
+            if (cpuChance <= cpuAttack.accuracy) {
+                player.takeDamage(cpuAttack.baseDamage);
+            } else {
+                System.out.println(opponent.getName() + "'s attack missed!");
+            }
 
             System.out.println(opponent.getName() + " used " + cpuAttack.name + "!");
             System.out.println(player.getName() + " HP: "
