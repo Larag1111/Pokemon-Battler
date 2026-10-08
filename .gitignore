@@ -40,3 +40,7 @@ build/
 .DS_Store
 
 pokedex.txt
+.idea/
+target/
+pokedex.txt
+battle_stats.txt
