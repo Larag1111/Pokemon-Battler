@@ -111,6 +111,7 @@ public class Battle {
         } else if (attack.type == Type.ELECTRIC && defender.getType() == Type.WATER) {
             damage = damage * 2;
         }
+        damage = (int) (damage * (0.85 + Math.random() * 0.15));
 
         return damage;
     }
