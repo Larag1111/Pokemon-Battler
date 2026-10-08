@@ -52,4 +52,16 @@ public class Pokemon {
     public void setCurrentHp(int currentHp) {
         this.currentHp = currentHp;
     }
+
+    public void takeDamage(int damage) {
+        currentHp -= damage;
+
+        if (currentHp < 0) {
+            currentHp = 0;
+        }
+    }
+
+    public boolean isDefeated() {
+        return currentHp <= 0;
+    }
 }
