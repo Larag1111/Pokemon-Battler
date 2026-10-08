@@ -13,6 +13,7 @@ public class Main {
         Path path = Path.of("pokedex.txt");
         List<Pokemon> pokedex = createSeedData();
         BattleStats stats = new BattleStats();
+        stats.loadStats();
 
 
         if (Files.exists(path)) {
@@ -50,6 +51,7 @@ public class Main {
                 }
                 case 8 -> {
                     savePokedex(path, pokedex);
+                    stats.saveStats();
                     running = false;
                 }
                 case 9 -> {
