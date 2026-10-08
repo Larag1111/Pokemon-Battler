@@ -55,7 +55,13 @@ public class Battle {
             int chance = (int) (Math.random() * 100) + 1;
 
             if (chance <= chosenAttack.accuracy) {
-                opponent.takeDamage(chosenAttack.baseDamage);
+                int damage = chosenAttack.baseDamage;
+
+                if (chosenAttack.type == Type.GRASS && opponent.getType() == Type.WATER) {
+                    damage = damage * 2;
+                }
+
+                opponent.takeDamage(damage);
             } else {
                 System.out.println(player.getName() + "'s attack missed!");
             }
