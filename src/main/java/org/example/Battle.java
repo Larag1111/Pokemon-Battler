@@ -1,4 +1,3 @@
-
 package org.example;
 
 import java.util.Scanner;
@@ -99,6 +98,9 @@ public class Battle {
             System.out.println(player.getName() + ": " + player.getCurrentHp());
             System.out.println(opponent.getName() + ": " + opponent.getCurrentHp());
         }
+
+        player.setCurrentHp(player.getMaxHp());
+        opponent.setCurrentHp(opponent.getMaxHp());
     }
 
     private static int calculateDamage(Attack attack, Pokemon defender) {
