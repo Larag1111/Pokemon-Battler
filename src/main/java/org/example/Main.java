@@ -13,6 +13,7 @@ public class Main {
         Path path = Path.of("pokedex.txt");
         List<Pokemon> pokedex = createSeedData();
 
+
         if (Files.exists(path)) {
             loadPokedex(path, pokedex);
         }
@@ -29,8 +30,9 @@ public class Main {
             System.out.println("6. Load");
             System.out.println("7. Reset");
             System.out.println("8. Exit");
+            System.out.println("9. Start battle");
 
-            int choice = readIntInRange(scanner, "Choose: ", 1, 8);
+            int choice = readIntInRange(scanner, "Choose: ", 1, 9);
 
             switch (choice) {
                 case 1 -> showAllPokemon(pokedex);
@@ -47,6 +49,13 @@ public class Main {
                 case 8 -> {
                     savePokedex(path, pokedex);
                     running = false;
+                }
+                case 9 -> {
+                    if (pokedex.size() >= 2) {
+                        Battle.start(pokedex.get(0), pokedex.get(1));
+                    } else {
+                        System.out.println("Not enough Pokemon to start a battle.");
+                    }
                 }
             }
         }
