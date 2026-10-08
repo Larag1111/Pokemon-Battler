@@ -24,6 +24,7 @@ public class Main {
         boolean running = true;
 
         while (running) {
+            try {
             System.out.println("\n=== POKEDEX ===");
             System.out.println("1. Show all Pokemon");
             System.out.println("2. Add Pokemon");
@@ -72,6 +73,12 @@ public class Main {
                     }
                 }
                 case 10 -> stats.showStats();
+            }
+
+            } catch (java.util.NoSuchElementException e) {
+                System.out.println("\nInput closed. Exiting.");
+                stats.saveStats();
+                running = false;
             }
         }
     }

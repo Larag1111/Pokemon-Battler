@@ -36,6 +36,11 @@ public class Battle {
             while (true) {
                 System.out.print("Choose: ");
 
+                if (!scanner.hasNext()) {
+                    System.out.println("\nBattle cancelled.");
+                    return;
+                }
+
                 if (scanner.hasNextInt()) {
                     choice = scanner.nextInt();
 
