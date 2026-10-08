@@ -68,6 +68,7 @@ public class Main {
                         } while (opponent == player);
 
                         Battle.start(player, opponent, stats);
+                        stats.saveStats();
                     } else {
                         System.out.println("Not enough Pokemon to start a battle.");
                     }
