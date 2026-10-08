@@ -12,6 +12,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Path path = Path.of("pokedex.txt");
         List<Pokemon> pokedex = createSeedData();
+        BattleStats stats = new BattleStats();
 
 
         if (Files.exists(path)) {
@@ -31,8 +32,9 @@ public class Main {
             System.out.println("7. Reset");
             System.out.println("8. Exit");
             System.out.println("9. Start battle");
+            System.out.println("10. Battle stats");
 
-            int choice = readIntInRange(scanner, "Choose: ", 1, 9);
+            int choice = readIntInRange(scanner, "Choose: ", 1, 10);
 
             switch (choice) {
                 case 1 -> showAllPokemon(pokedex);
@@ -63,11 +65,12 @@ public class Main {
                             opponent = pokedex.get(randomIndex);
                         } while (opponent == player);
 
-                        Battle.start(player, opponent);
+                        Battle.start(player, opponent, stats);
                     } else {
                         System.out.println("Not enough Pokemon to start a battle.");
                     }
                 }
+                case 10 -> stats.showStats();
             }
         }
     }

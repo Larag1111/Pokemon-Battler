@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Battle {
 
-    public static void start(Pokemon player, Pokemon opponent) {
+    public static void start(Pokemon player, Pokemon opponent, BattleStats stats) {
         Scanner scanner = new Scanner(System.in);
 
         player.setCurrentHp(player.getMaxHp());
@@ -68,6 +68,7 @@ public class Battle {
             if (opponent.isDefeated()) {
                 System.out.println(opponent.getName() + " is defeated!");
                 System.out.println("You win!");
+                stats.addWin();
                 break;
             }
 
@@ -90,6 +91,7 @@ public class Battle {
             if (player.isDefeated()) {
                 System.out.println(player.getName() + " is defeated!");
                 System.out.println("You lose!");
+                stats.addLoss();
                 break;
             }
 
