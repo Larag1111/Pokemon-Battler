@@ -8,6 +8,9 @@ public class Battle {
     public static void start(Pokemon player, Pokemon opponent) {
         Scanner scanner = new Scanner(System.in);
 
+        player.setCurrentHp(player.getMaxHp());
+        opponent.setCurrentHp(opponent.getMaxHp());
+
         System.out.println("\n=== POKEMON BATTLE ===");
         System.out.println(player.getName() + " VS " + opponent.getName());
 
@@ -94,4 +97,3 @@ public class Battle {
         }
     }
 }
-
