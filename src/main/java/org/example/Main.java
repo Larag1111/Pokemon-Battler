@@ -12,6 +12,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Path path = Path.of("pokedex.txt");
         List<Pokemon> pokedex = createSeedData();
+        List<Pokemon> wildPokemon = createWildPokemon();
         BattleStats stats = new BattleStats();
         stats.loadStats();
 
@@ -55,22 +56,19 @@ public class Main {
                     running = false;
                 }
                 case 9 -> {
-                    if (pokedex.size() >= 2) {
+                    if (!pokedex.isEmpty()) {
                         showAllPokemon(pokedex);
 
                         int number = readIntInRange(scanner, "Choose your Pokemon: ", 1, pokedex.size());
                         Pokemon player = pokedex.get(number - 1);
 
-                        Pokemon opponent;
-                        do {
-                            int randomIndex = (int) (Math.random() * pokedex.size());
-                            opponent = pokedex.get(randomIndex);
-                        } while (opponent == player);
+                        int randomIndex = (int) (Math.random() * wildPokemon.size());
+                        Pokemon opponent = wildPokemon.get(randomIndex);
 
                         Battle.start(player, opponent, stats);
                         stats.saveStats();
                     } else {
-                        System.out.println("Not enough Pokemon to start a battle.");
+                        System.out.println("You have no Pokemon to battle with.");
                     }
                 }
                 case 10 -> stats.showStats();
@@ -87,6 +85,17 @@ public class Main {
         pokedex.add(createPokemon("Meowth", Type.NORMAL, 90, "Scratch", 40, 100, Type.NORMAL));
         pokedex.add(createPokemon("Psyduck", Type.WATER, 100, "Confusion", 50, 100, Type.WATER));
         return pokedex;
+    }
+
+    public static List<Pokemon> createWildPokemon() {
+        List<Pokemon> wildPokemon = new ArrayList<>();
+
+        wildPokemon.add(createPokemon("Vulpix", Type.FIRE, 90, "Ember", 40, 100, Type.FIRE));
+        wildPokemon.add(createPokemon("Oddish", Type.GRASS, 100, "Absorb", 40, 100, Type.GRASS));
+        wildPokemon.add(createPokemon("Poliwag", Type.WATER, 95, "Water Gun", 40, 100, Type.WATER));
+        wildPokemon.add(createPokemon("Magnemite", Type.ELECTRIC, 100, "Thunder Shock", 40, 100, Type.ELECTRIC));
+
+        return wildPokemon;
     }
 
     public static Pokemon createPokemon(String name, Type type, int hp, String attackName,
