@@ -55,8 +55,33 @@ public class Battle {
             }
 
             Attack chosenAttack = player.getAttacks().get(choice - 1);
-
+            boolean playerFirst = player.getMaxHp() >= opponent.getMaxHp();
             int chance = (int) (Math.random() * 100) + 1;
+
+            if (!playerFirst) {
+                int randomIndex = (int) (Math.random() * opponent.getAttacks().size());
+                Attack cpuAttack = opponent.getAttacks().get(randomIndex);
+
+                System.out.println(opponent.getName() + " attacks first!");
+
+                if ((int) (Math.random() * 100) + 1 <= cpuAttack.accuracy) {
+                    int damage = calculateDamage(cpuAttack, player);
+                    player.takeDamage(damage);
+                } else {
+                    System.out.println(opponent.getName() + "'s attack missed!");
+                }
+
+                System.out.println(opponent.getName() + " used " + cpuAttack.name + "!");
+                System.out.println(player.getName() + " HP: "
+                        + player.getCurrentHp() + "/" + player.getMaxHp());
+
+                if (player.isDefeated()) {
+                    System.out.println(player.getName() + " is defeated!");
+                    System.out.println("You lose!");
+                    stats.addLoss();
+                    break;
+                }
+            }
 
             if (chance <= chosenAttack.accuracy) {
                 int damage = calculateDamage(chosenAttack, opponent);
@@ -75,28 +100,29 @@ public class Battle {
                 stats.addWin();
                 break;
             }
+            if (playerFirst) {
+                int randomIndex = (int) (Math.random() * opponent.getAttacks().size());
+                Attack cpuAttack = opponent.getAttacks().get(randomIndex);
 
-            int randomIndex = (int) (Math.random() * opponent.getAttacks().size());
-            Attack cpuAttack = opponent.getAttacks().get(randomIndex);
+                int cpuChance = (int) (Math.random() * 100) + 1;
 
-            int cpuChance = (int) (Math.random() * 100) + 1;
+                if (cpuChance <= cpuAttack.accuracy) {
+                    int damage = calculateDamage(cpuAttack, player);
+                    player.takeDamage(damage);
+                } else {
+                    System.out.println(opponent.getName() + "'s attack missed!");
+                }
 
-            if (cpuChance <= cpuAttack.accuracy) {
-                int damage = calculateDamage(cpuAttack, player);
-                player.takeDamage(damage);
-            } else {
-                System.out.println(opponent.getName() + "'s attack missed!");
-            }
+                System.out.println(opponent.getName() + " used " + cpuAttack.name + "!");
+                System.out.println(player.getName() + " HP: "
+                        + player.getCurrentHp() + "/" + player.getMaxHp());
 
-            System.out.println(opponent.getName() + " used " + cpuAttack.name + "!");
-            System.out.println(player.getName() + " HP: "
-                    + player.getCurrentHp() + "/" + player.getMaxHp());
-
-            if (player.isDefeated()) {
-                System.out.println(player.getName() + " is defeated!");
-                System.out.println("You lose!");
-                stats.addLoss();
-                break;
+                if (player.isDefeated()) {
+                    System.out.println(player.getName() + " is defeated!");
+                    System.out.println("You lose!");
+                    stats.addLoss();
+                    break;
+                }
             }
 
             System.out.println("\nHP after this round:");
