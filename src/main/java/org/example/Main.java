@@ -204,8 +204,8 @@ public class Main {
 
     public static Attack readAttack(Scanner scanner) {
         String name = readName(scanner, "Attack name: ");
-        int damage = readIntInRange(scanner, "Attack damage: ", 0, Integer.MAX_VALUE);
-        int accuracy = readIntInRange(scanner, "Attack accuracy (0-100): ", 0, 100);
+        int damage = readIntInRange(scanner, "Attack damage: ", 1, Integer.MAX_VALUE);
+        int accuracy = readIntInRange(scanner, "Attack accuracy (1-100): ", 1, 100);
         Type type = readType(scanner, "Attack type");
         return new Attack(name, damage, accuracy, type);
     }
@@ -343,7 +343,7 @@ public class Main {
                 int accuracy = Integer.parseInt(attackParts[2]);
                 Type attackType = Type.valueOf(attackParts[3]);
 
-                if (!validSavedName(attackName) || damage < 0 || accuracy < 0 || accuracy > 100) {
+                if (!validSavedName(attackName) || damage < 1 || accuracy < 1 || accuracy > 100) {
                     return null;
                 }
 

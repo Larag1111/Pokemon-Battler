@@ -38,6 +38,8 @@ public class Battle {
 
                 if (!scanner.hasNext()) {
                     System.out.println("\nBattle cancelled.");
+                    player.setCurrentHp(player.getMaxHp());
+                    opponent.setCurrentHp(opponent.getMaxHp());
                     return;
                 }
 
