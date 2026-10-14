@@ -54,11 +54,7 @@ public class Pokemon {
     }
 
     public void takeDamage(int damage) {
-        currentHp -= damage;
-
-        if (currentHp < 0) {
-            currentHp = 0;
-        }
+        currentHp = (int) Math.max(0L, (long) currentHp - damage);
     }
 
     public boolean isDefeated() {

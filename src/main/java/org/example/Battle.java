@@ -137,7 +137,7 @@ public class Battle {
     }
 
     private static int calculateDamage(Attack attack, Pokemon defender) {
-        int damage = attack.baseDamage;
+        long damage = attack.baseDamage;
 
         if (attack.type == Type.GRASS && defender.getType() == Type.WATER) {
             damage = damage * 2;
@@ -148,8 +148,8 @@ public class Battle {
         } else if (attack.type == Type.ELECTRIC && defender.getType() == Type.WATER) {
             damage = damage * 2;
         }
-        damage = (int) (damage * (0.85 + Math.random() * 0.15));
+        damage = (long) (damage * (0.85 + Math.random() * 0.15));
 
-        return damage;
+        return (int) Math.min(Integer.MAX_VALUE, damage);
     }
 }

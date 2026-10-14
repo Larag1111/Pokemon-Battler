@@ -305,11 +305,6 @@ public class Main {
             return;
         }
 
-        if (loaded.isEmpty()) {
-            System.out.println("Could not load Pokedex. Saved file is empty.");
-            return;
-        }
-
         pokedex.clear();
         pokedex.addAll(loaded);
         System.out.println("Pokedex loaded.");

@@ -6,7 +6,7 @@ A console-based Pokemon game built in Java. This project extends my previous Pok
 
 - Show all Pokemon in the Pokedex
 - Add, edit and delete Pokemon
-- Add and remove attacks
+- Add and remove attacks (each Pokemon has 1–4 attacks)
 - Save and load Pokedex data
 - Reset the Pokedex to the default Pokemon
 - Choose a Pokemon and battle against a randomly selected wild Pokemon
@@ -47,18 +47,22 @@ Each round, the player chooses an attack and the computer randomly selects one o
 
 - Damage starts with the attack's base damage.
 - Some type matchups deal double damage: GRASS against WATER, WATER against FIRE, FIRE against GRASS, and ELECTRIC against WATER.
+- Other type matchups use normal damage.
 - A random multiplier between 0.85 and 1.0 is applied.
 - The result is converted to an integer.
+- The calculation uses `long` to handle large damage values. The final damage is limited to `Integer.MAX_VALUE` to avoid integer overflow.
 
-Formula: `damage = (int) (baseDamage * typeMultiplier * randomMultiplier)`
+Formula: `damage = (int) min(Integer.MAX_VALUE, (long) (baseDamage * typeMultiplier * randomMultiplier))`
 
 An attack only deals damage if it passes its accuracy check. Otherwise, the attack misses.
 
-A Pokemon is defeated when its HP reaches 0. The battle ends when either Pokemon is defeated. Wins and losses are recorded.
+A Pokemon is defeated when its HP reaches 0. A defeated Pokemon cannot attack again. The battle ends when either Pokemon is defeated, and the winner is shown in the console.
+
+Wins and losses are recorded and saved.
 
 ## Saving data
 
-The Pokedex is saved to `pokedex.txt`.
+The Pokedex is saved to `pokedex.txt` and loaded when the program starts. If no saved Pokedex data exists, the program starts with default Pokemon.
 
 Battle results are saved to `battle_stats.txt`. The program loads saved battle statistics when it starts.
 
@@ -77,15 +81,14 @@ The project uses separate classes with different responsibilities:
 
 The project uses encapsulation through private fields and methods in classes such as `Pokemon` and `BattleStats`. A Pokemon also contains a list of `Attack` objects.
 
-The project does not currently use class inheritance or interfaces.
+The classes have separate responsibilities to keep the code organized and make it easier to maintain. The project uses composition, but does not currently use inheritance or interfaces.
 
 ## VG requirements
 
-This project focuses on meeting the G requirements. No additional VG requirements have been implemented intentionally.
+I have focused on the G requirements and have not attempted the additional VG requirements.
 
 ## Known limitations
 
 - The type-effectiveness system only includes selected double-damage matchups, not a complete Pokemon type chart.
 - Turn order is based on maximum HP instead of a separate speed attribute.
 - Battle statistics store total wins and losses, not detailed results for individual Pokemon.
-- Saved data uses text files rather than JSON.
